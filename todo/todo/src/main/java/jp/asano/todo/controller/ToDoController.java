@@ -1,6 +1,5 @@
 package jp.asano.todo.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -134,13 +133,9 @@ public class ToDoController {
      */
     @GetMapping("/{mid}/{seq}/done")
     String addDone(@PathVariable String mid, @PathVariable Long seq, Model model){
-        //ToDoの検索
-        ToDo todo = tService.getToDo(seq);
-        //Done，DoneAtの更新
-        todo.setDone(true);
-        todo.setDoneAt(new Date());
+        
         //todoの更新
-        tService.updateToDo(todo);
+        tService.setStateDone(seq);
 
         // /{mid}/list へリダイレクト
         return "redirect:/{mid}/list";

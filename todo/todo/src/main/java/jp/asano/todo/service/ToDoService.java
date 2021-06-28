@@ -3,7 +3,6 @@ package jp.asano.todo.service;
 import java.util.Date;
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -98,7 +97,12 @@ public class ToDoService {
      * @param todo
      * @return
      */
-    public ToDo updateToDo(ToDo todo){
+    public ToDo setStateDone(Long seq){
+        //ToDoの検索
+        ToDo todo = this.getToDo(seq);
+        //Done，DoneAtの更新
+        todo.setDone(true);
+        todo.setDoneAt(new Date());
         return tRepo.save(todo);
     }
 }
