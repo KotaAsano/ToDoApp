@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>みんなのToDoリスト</title>
+</head>
+<body>
+    <h1>みんなのToDoリスト</h1>
+    <p><a th:href=@{/{mid}/list(mid=${MemberID})}>ToDoリストに戻る</a></p>
+    <h2>ToDoリスト</h2>
+    <table border="1">
+        <tr>
+            <td>番号</td>
+            <td>作成者</td>
+            <td>ToDo</td>
+            <td>作成日時</td>
+        </tr>
+        <tr th:each="todo: ${AllToDoList}">
+            <td>[[${todo.seq}]]</td>
+            <td>[[${todo.mid}]]</td>
+            <td>[[${todo.title}]]</td>
+            <td>[[${todo.createdAt}]]</td>
+        </tr>
+    </table>
+    
+    <h2>完了リスト</h2>
+    <table border="1">
+        <tr>
+            <td>番号</td>
+            <td>作成者</td>
+            <td>ToDo</td>
+            <td>完了日時</td>
+        </tr>
+        <tr th:each="done: ${AllDoneList}">
+            <td>[[${done.seq}]]</td>
+            <td>[[${done.mid}]]</td>
+            <td>[[${done.title}]]</td>
+            <td>[[${done.doneAt}]]</td>
+        </tr>
+    </table>
+
+</body>
+</html>
