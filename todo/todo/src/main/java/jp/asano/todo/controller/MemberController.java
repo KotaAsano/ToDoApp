@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,10 +28,9 @@ public class MemberController {
     * @return
     */
    @GetMapping("/register")
-   String showUserForm(Model model) {
+   String showUserForm(@ModelAttribute MemberForm form, Model model) {
        List<Member> members = mService.getAllMembers();
        model.addAttribute("members", members);
-       MemberForm form = new MemberForm();
        model.addAttribute("MemberForm", form);
        
        return "register";
@@ -41,9 +42,14 @@ public class MemberController {
     * @return
     */
    @PostMapping("/check") 
-   String checkUserForm(@ModelAttribute(name = "MemberForm") MemberForm form,  Model model) {
-       model.addAttribute("MemberForm", form);
-       return "check";
+   String checkUserForm(@Validated @ModelAttribute(name = "MemberForm") MemberForm form, BindingResult bindingResult, Model model) {
+       // 入力チェックに引っかかった場合、ユーザー登録画面に戻る
+       if (bindingResult.hasErrors()) {
+        // GETリクエスト用のメソッドを呼び出して、ユーザー登録画面に戻る
+        return showUserForm(form, model);
+        }   
+        model.addAttribute("MemberForm", form);
+        return "check";
    }
    /**
     * 管理者用・ユーザ登録処理 -> 完了ページ HTTP-POST /admin/register
@@ -64,8 +70,8 @@ public class MemberController {
     * @return
     */
    @GetMapping("/delete/{mid}")
-   String deleteUser(@PathVariable String mid, Model model) {
+   String deleteUser(@ModelAttribute(name = "MemberForm") MemberForm form,@PathVariable String mid, Model model) {
        mService.deleteMember(mid);
-       return showUserForm(model);
+       return showUserForm(form, model);
    }
 }

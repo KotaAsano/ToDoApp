@@ -1,10 +1,13 @@
 package jp.asano.todo.dto;
 
+import javax.validation.constraints.NotBlank;
+
 import jp.asano.todo.entity.ToDo;
 import lombok.Data;
 
 @Data
 public class ToDoForm {
+    @NotBlank
     String title; //題目
     
     public ToDo toEntity(){

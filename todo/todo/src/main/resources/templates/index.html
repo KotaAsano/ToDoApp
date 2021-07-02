@@ -4,19 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <title>ログイン画面</title>
+    <link rel="stylesheet" th:href=@{/css/todo_css.css} />
 </head>
 
 <body>
     <h2>ToDoアプリへようこそ</h1>
-    <img th:src="@{img/todo_people.png}" />
-    <p>IDを入力してログインしてください</p>
     
-    <form role="form" th:action="@{/login}" method="post">
+    
+    <form role="form" th:action="@{/login}"  method="post">
+        <p>IDを入力してログインしてください</p>
         <table>
             <tr>
                 <td><label>メンバーID: </label></td>
-                <td><input type="text" name="mid"/></td>
-                <td><input type="submit" value="ログイン" /></td>
+                <td>
+                    <input type="text" id="submit_txt" name="mid" />
+                </td>
+                <td><input type="submit" id="submit_bt" value="ログイン" /></td>
             </tr>
         </table>
     </form>

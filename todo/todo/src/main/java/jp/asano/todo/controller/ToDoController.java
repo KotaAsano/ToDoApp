@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jp.asano.todo.entity.Member;
 import jp.asano.todo.dto.ToDoForm;
+import jp.asano.todo.dto.MemberForm;
 import jp.asano.todo.entity.ToDo;
 import jp.asano.todo.service.MemberService;
 import jp.asano.todo.service.ToDoService;
@@ -37,6 +40,7 @@ public class ToDoController {
         //MemberID オブジェクトの生成，modelに格納
         String mid = new String();
         model.addAttribute("MemberID", mid);
+        //model.addAttribute("MemberForm",new MemberForm());
         
         //index.htmlの表示
         return "index";
@@ -49,8 +53,11 @@ public class ToDoController {
      * @param redirectAttrs
      * @return
      */
+    
     @PostMapping("/login")
-    String checkloginForm(@RequestParam String mid, Model model, RedirectAttributes redirectAttrs){
+    String checkloginForm(@RequestParam String mid, Model model, RedirectAttributes redirectAttrs ){
+        // 入力チェックに引っかかった場合、ユーザー登録画面に戻る
+
         //IDチェック
         mService.getMember(mid);
         //リダイレクト用
@@ -59,6 +66,21 @@ public class ToDoController {
         // /{mid}/todosへリダイレクト
         return "redirect:/{mid}/list";
     }
+
+    /*
+    @PostMapping("/login")
+    String checkloginForm(@ModelAttribute(name = "MenberForm") MemberForm form, Model model, RedirectAttributes redirectAttrs ){
+        // 入力チェックに引っかかった場合、ユーザー登録画面に戻る
+
+        model.addAttribute("MemberForm",form);
+        //IDチェック
+        mService.getMember(form.getMid());
+        //リダイレクト用
+        redirectAttrs.addAttribute("mid",form.getMid());
+
+        // /{mid}/todosへリダイレクト
+        return "redirect:/{mid}/list";
+    }*/
 
     /**
      * ユーザーのリスト表示 HTTP-GET /{mid}/list
@@ -132,10 +154,10 @@ public class ToDoController {
      * @return
      */
     @GetMapping("/{mid}/{seq}/done")
-    String addDone(@PathVariable String mid, @PathVariable Long seq, Model model){
+    String doneToDo(@PathVariable String mid, @PathVariable Long seq, Model model){
         
         //todoの更新
-        tService.setStateDone(seq);
+        tService.done(mid,seq);
 
         // /{mid}/list へリダイレクト
         return "redirect:/{mid}/list";

@@ -93,16 +93,44 @@ public class ToDoService {
     }
 
     /**
-     * ToDoの更新
+     * ToDoの完了
      * @param todo
      * @return
      */
-    public ToDo setStateDone(Long seq){
+    public ToDo done(String mid, Long seq){
         //ToDoの検索
         ToDo todo = this.getToDo(seq);
-        //Done，DoneAtの更新
-        todo.setDone(true);
-        todo.setDoneAt(new Date());
+        if(todo.getMid().equals(mid)){
+            //Done，DoneAtの更新
+            todo.setDone(true);
+            todo.setDoneAt(new Date());
+        }
         return tRepo.save(todo);
+    }
+
+    /**
+     * ToDoの更新 (U)
+     * @param mid
+     * @param seq
+     * @param form
+     * @return
+     */
+    public ToDo updateToDo(String mid, Long seq, ToDoForm form){
+        ToDo todo = this.getToDo(seq);
+        todo.setMid(mid);
+        todo.setTitle(form.toEntity().getTitle());
+        return tRepo.save(todo);
+    }
+
+    /**
+     * ToDoの削除 (D)
+     * @param mid
+     * @param seq
+     */
+    public void deleteToDo(String mid, Long seq){
+        ToDo todo = getToDo(seq);
+        if(todo.getMid().equals(mid)){
+            tRepo.delete(todo);
+        }
     }
 }
