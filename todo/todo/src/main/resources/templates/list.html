@@ -4,13 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <title>ToDoリスト画面</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" th:href=@{/css/todo_css.css} />
 </head>
 
 <body>
-    <h1>[[${MemberName}]]さんのToDoリスト</h1>
-    <p><a th:href=@{/{mid}/alllist(mid=${MemberID})}>みんなのToDo</a></p>
+    <h2>[[${MemberName}]]さんのToDoリスト</h2>
+    <div class="container">
+        <a id="link-btn" th:href=@{/{mid}/alllist(mid=${MemberID})}>みんなのToDo</a>
+        <a id="link-btn" th:href=@{/}>ログアウト</a>
+    </div>
 
-    <h2>ToDoリスト</h2>
+    <h3>ToDoリスト</h3>
     <table border="1">
         <tr>
             <td>番号</td>
@@ -22,18 +27,19 @@
             <td>[[${t.seq}]]</td>
             <td>[[${t.title}]]</td>
             <td>[[${t.createdAt}]]</td>
-            <td><a th:href=@{/{mid}/{seq}/done(mid=${t.mid},seq=${t.seq})}>完了</td>
+            <td><a id="done-btn" th:href=@{/{mid}/{seq}/done(mid=${t.mid},seq=${t.seq})}>完了</td>
         </tr>
     </table>
-
-    <h3>ToDoを追加する</h3>
+        
     <form role="form" th:action="@{/{mid}/add(mid=${MemberID})}" th:object="${ToDoForm}" method="post">
-        <label>ToDoの追加</label>
-        <input type="text" required th:field="*{title}" />
-        <input type="submit" value="追加する">
+        <div class="input-field">
+            <p><input type="text" id="submit_txt" placeholder="ToDoを追加する" required th:field="*{title}" /></p>
+            <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color: red"></span>
+            <p><input type="submit" id="submit_bt" value="追加"></p>
+        </div>
     </form>
 
-    <h2>完了リスト</h2>
+    <h3>完了リスト</h3>
     <table border="1">
         <tr>
             <td>番号</td>
@@ -47,6 +53,5 @@
         </tr>
     </table>
     
-    <p><a th:href=@{/}>ログアウト</a></p>
 </body>
 </html>

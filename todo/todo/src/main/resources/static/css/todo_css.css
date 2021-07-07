@@ -1,30 +1,40 @@
 /* htmlの周囲の余白を作る */
 body {
-    height: 100vh;
-    margin: 20px; /* 外側の余白を40pxにする */
-    padding: 0; /* 内側の余白を消す(念のため) */
-    background: linear-gradient(135deg, rgba(240, 184, 32, 0.5), rgba(50, 135, 245, 0.5) ),url("https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNTgwfDB8MXxzZWFyY2h8M3x8d29ya3xlbnwwfHx8fDE2MjUxNDYzMjE&ixlib=rb-1.2.1&q=80&w=400");
+  min-width: 50%;
+  min-height: 100vh;
+  margin: 20px; /* 外側の余白を40pxにする */
+  padding: 0; /* 内側の余白を消す(念のため) */
+    background: linear-gradient(135deg, rgba(255, 229, 79, 0.3), rgba(50, 135, 245, 0.3) ),url("https://cdn.pixabay.com/photo/2015/06/08/15/11/typewriter-801921_1280.jpg");
     background-size: cover;
   }
   
   /* h1(タイトル)のデザイン */
   h1 {
-    padding: 0.5em; /*文字周りの余白*/
-    color: #494949; /*文字色*/
-    background: #e6f2f5; /*背景色*/
-    border-left: solid 5px #78bbc7; /*左線（実線 太さ 色）*/
+    font-size: 50px;
+    margin: 20px;
+    margin-top: 100px;
+    margin-bottom: 50px;
+    color: #fcfcfc; /*文字色*/
+    border-bottom: solid 5px rgb(252, 252, 252, 0.3); /*下線*/
+    text-align: center;
   }
   
   /* h2, h3(見出し)のデザイン */
-  h2,
-  h3 {
-    font-size: 70px;
+  h2{
+    font-size: 50px;
     margin: 20px;
-
-    margin-top: 130px;
+    margin-top: 50px;
     color: #fcfcfc; /*文字色*/
-    background: rgb(109, 109, 109,0); /*背景色*/
-    border-bottom: solid 5px #5e2504; /*下線*/
+    border-bottom: solid 5px rgb(252, 252, 252, 0.3); /*下線*/
+    text-align: center;
+  }
+
+  h3 {
+    font-size: 40px;
+    margin: 20px;
+    margin-top: 30px;
+    color: #fcfcfc; /*文字色*/
+    border-bottom: solid 5px rgb(252, 252, 252, 0.3); /*下線*/
     text-align: center;
   }
   
@@ -41,11 +51,11 @@ body {
   
   /* form(ログイン時)のデザイン */
   form {
-    width: 50%;
+    width: 40%;
     margin: auto auto;
-    margin-top: 50px;
+    margin-top: 20px;
     padding: 0.5em;
-    background: rgba(0, 3, 39, 0.2); /*背景色*/
+    /*background: rgba(0, 3, 39, 0.2); /*背景色*/
     border-radius: 20px;
     color: #ffffff;
   }
@@ -55,11 +65,12 @@ body {
     border-collapse: collapse;
     margin: 0 auto;
     padding: 0;
-    width: 100%;
+    width: 70%;
     table-layout: fixed;
     border-radius: 30px;
     text-align: center;
     font-weight: bold;
+    color: #fcfcfc;
   }
   
   table tr {
@@ -68,57 +79,137 @@ body {
   }
   table th,
   table td {
-    padding: 1em 10px 1em 1em;
-    /*border-right: 2px solid #fff;*/
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    background-color: #0315184d;
+    border-right: 3px dotted #fff;
+    border-left: 3px dotted #fff;
+    
   }
   table th {
-    font-size: 0.85em;
-  }
-  table thead tr {
-    background-color: #167f92;
-    color: #fff;
-  }
-  table tbody th {
-    background: #78bbc7;
-    color: #fff;
+    font-size: 0.01em;
   }
   .txt {
     text-align: left;
-    font-size: 0.85em;
+    font-size: 0.01em;
   }
 
   #submit_bt{
-      width: 70%;
-      height: 130%;
-      font-size: 15px;
+      width: 200px;
+      height: 40px;
+      font-size: 20px;
+      font-weight: bold;
       border-radius: 30px;
-      background-color: transparent;
-      color: #fff;
+      border: none;
+      background-color: #fcfcfc;
+      color: #15aa96;
       cursor: pointer;
+      margin: auto;
+      transition: background 0.5s; 
   }
   #submit_bt:hover {
-    box-shadow    : none;        /* カーソル時の影消去 */
+    box-shadow    : none;
     transition: background 0.5s;
-    color         : #000066;     /* 背景色     */
-    background    : #ffffff;     /* 文字色     */
+    color         : #ffffff;
+    background    : #15aa96;
   }
 
-  #submit_tx{
-      height: 50pxs;
+  #submit_txt{
+      height: 50px;
+      width: 100%;
+      margin: auto;
+      border: solid 0.5px #fcfcfc;
+      border-radius: 10px;
   }
+  .submit-field{
+    display: flex;
+    justify-content: center;
+  }
+
+
   
-  /* a(リンク)のデザイン */
+  .container {
+    font-family: "Yu Gothic", YuGothic, Verdana, 'Hiragino Kaku Gothic ProN','Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3', 'メイリオ', Meiryo, sans-serif;
+    text-align: center;
+  }
   a {
-    font-weight: bold; /*太字に*/
-    text-decoration: none; /*下線消す*/
-    background: skyblue; /*背景を水色に*/
-    color: white; /*文字を白に*/
-    padding: 5px 10px; /*内側の余白*/
-    border-radius: 20px; /*角を丸くする*/
-    font-family: 'Avenir', 'Arial'; /*フォントをいい感じに*/
+    display: inline-block;
+    width: 140px;
+    height: 20px;
+    text-align: center;
+    background-color: #15aa96;
+    font-size: 15px;
+    color: #FFF;
+    text-decoration: none;
+    font-weight: bold;
+    border: 2px solid #15aa96;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+  a:after{
+    width: 100%;
+    height: 0;
+    content:"";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background : #FFF;
+    opacity: 0;
+    transform: translateX(-50%) translateY(-50%) rotate(45deg);
+    transition: .2s;
+    z-index: -1;
+  }
+  a:hover{
+    color: #15aa96;
+  }
+  a:hover:after{
+    height: 400%;
+    opacity: 1;
+  }
+  a:active:after{
+    height: 340%;
+    opacity: 1;
   }
   
-  a:hover {
-    background: silver; /*背景色をシルバーに*/
-    text-decoration: none; /*下線を消す*/
+  @media screen and (max-width: 959px) {
+    /* 480px以下に適用されるCSS（スマホ用） */
+    body {
+      max-width: 100vh;
+      margin: 20px; /* 外側の余白を40pxにする */
+      padding: 0; /* 内側の余白を消す(念のため) */
+      }
+    h1 {
+      width: auto;
+    }
+
+    form{
+      width: 70%;
+    }
+
+    #submit_txt{
+      height: 50px;
+      
+      width: 100%;
+      margin: auto;
+      margin-bottom: 20px;
+  }
+
+  table {
+    width: 100%;
+    
+  }
+
+  #done-btn{
+    width: 50px;
+  }
+
+  #done-btn:after{
+    width: 100%;
+  }
+
+  table th,
+  table td {
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    overflow-wrap: break-word;
+  }
   }

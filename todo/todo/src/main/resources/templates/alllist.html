@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>みんなのToDoリスト</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" th:href=@{/css/todo_css.css} />
 </head>
 <body>
-    <h1>みんなのToDoリスト</h1>
-    <p><a th:href=@{/{mid}/list(mid=${MemberID})}>ToDoリストに戻る</a></p>
-    <h2>ToDoリスト</h2>
+    <h2>みんなのToDoリスト</h2>
+    <p><a th:href=@{/{mid}/list(mid=${MemberID})}>戻る</a></p>
+    <h3>ToDoリスト</h3>
     <table border="1">
         <tr>
             <td>番号</td>
