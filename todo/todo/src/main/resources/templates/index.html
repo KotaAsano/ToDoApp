@@ -4,24 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <title>ログイン画面</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" th:href=@{/css/todo_css.css} />
 </head>
 
 <body>
-    <h2>ToDoアプリへようこそ</h1>
-    
-    
-    <form role="form" th:action="@{/login}"  method="post">
-        <p>IDを入力してログインしてください</p>
-        <table>
-            <tr>
-                <td><label>メンバーID: </label></td>
-                <td>
-                    <input type="text" id="submit_txt" name="mid" />
-                </td>
-                <td><input type="submit" id="submit_bt" value="ログイン" /></td>
-            </tr>
-        </table>
+    <h1>ToDoアプリへようこそ</h1>
+
+    <form role="form" th:action="@{/login}" th:object="${MemberForm}" method="post">
+        <div class="input-field">
+            <p><input type="text" id="submit_txt" placeholder="IDを入力してログインしてください" required th:field="*{mid}" /></p>
+            <span th:if="${#fields.hasErrors('mid')}" th:errors="*{mid}" style="color: red"></span>
+            <p><input type="submit" id="submit_bt" value="ログイン" /></p>
+        </div>
     </form>
     
 </body>

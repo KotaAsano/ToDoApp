@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jp.asano.todo.entity.Member;
@@ -36,51 +35,39 @@ public class ToDoController {
      * @return
      */
     @GetMapping("/") 
-    String showLoginForm(Model model){
+    String showLoginForm(@ModelAttribute MemberForm form, Model model){
         //MemberID オブジェクトの生成，modelに格納
         String mid = new String();
         model.addAttribute("MemberID", mid);
-        //model.addAttribute("MemberForm",new MemberForm());
-        
+        model.addAttribute("MemberForm",form);
         //index.htmlの表示
         return "index";
     }
     
     /**
      * ユーザのログイン処理 -> ToDoリストページ HTTP-POST /login
-     * @param mid
      * @param model
      * @param redirectAttrs
      * @return
-     */
-    
+     */ 
     @PostMapping("/login")
-    String checkloginForm(@RequestParam String mid, Model model, RedirectAttributes redirectAttrs ){
-        // 入力チェックに引っかかった場合、ユーザー登録画面に戻る
+    String checkloginForm(@Validated @ModelAttribute(name = "MemberForm") MemberForm form, BindingResult bindingResult, Model model, RedirectAttributes redirectAttrs ){
+        // 入力チェックに引っかかった場合、ログイン画面に戻る
+        if (bindingResult.hasFieldErrors("mid")) {
+            // GETリクエスト用のメソッドを呼び出して、ログイン画面に戻る
+            return showLoginForm(form, model);
+        } 
 
+        //formの更新
+        model.addAttribute("MemberForm", form);
         //IDチェック
-        mService.getMember(mid);
+        mService.getMember(form.getMid());
+        model.addAttribute("MemberID", form.getMid());
         //リダイレクト用
-        redirectAttrs.addAttribute("mid",mid);
-
+        redirectAttrs.addAttribute("mid",form.getMid());
         // /{mid}/todosへリダイレクト
         return "redirect:/{mid}/list";
     }
-
-    /*
-    @PostMapping("/login")
-    String checkloginForm(@ModelAttribute(name = "MenberForm") MemberForm form, Model model, RedirectAttributes redirectAttrs ){
-        // 入力チェックに引っかかった場合、ユーザー登録画面に戻る
-
-        model.addAttribute("MemberForm",form);
-        //IDチェック
-        mService.getMember(form.getMid());
-        //リダイレクト用
-        redirectAttrs.addAttribute("mid",form.getMid());
-
-        // /{mid}/todosへリダイレクト
-        return "redirect:/{mid}/list";
-    }*/
 
     /**
      * ユーザーのリスト表示 HTTP-GET /{mid}/list
@@ -89,14 +76,13 @@ public class ToDoController {
      * @return
      */
     @GetMapping("/{mid}/list")
-    String showUserToDos(@PathVariable String mid, Model model) {
+    String showUserToDos(@PathVariable String mid, @ModelAttribute ToDoForm form ,Model model) {
         //ユーザのToDo，Doneリストを取得，modelに格納
         List<ToDo> todos = tService.getToDoList(mid);
         model.addAttribute("ToDoList", todos);
         List<ToDo> dones = tService.getDoneList(mid);
         model.addAttribute("DoneList", dones);
         //空フォームの生成，modelに格納
-        ToDoForm form = new ToDoForm();
         model.addAttribute("ToDoForm", form);
         //MemberIDの更新
         model.addAttribute("MemberID", mid);
@@ -136,7 +122,12 @@ public class ToDoController {
      * @return
      */
     @PostMapping("/{mid}/add")
-    String addToDo(@ModelAttribute(name = "ToDoForm") ToDoForm form, @PathVariable String mid, Model model){
+    String addToDo(@Validated @ModelAttribute(name = "ToDoForm") ToDoForm form, BindingResult bindingResult, @PathVariable String mid, Model model){
+        // 入力チェックに引っかかった場合、ToDo画面に戻る
+        if (bindingResult.hasFieldErrors("title")) {
+            // GETリクエスト用のメソッドを呼び出して、ToDo画面に戻る
+            return showUserToDos(mid, form ,model);
+        }
         //フォームの更新
         model.addAttribute("ToDoForm", form);
         //ToDoの生成
